@@ -1,0 +1,8 @@
+.product-item .card-img-top{
+    height:200px;
+}
+
+.product-item .price{
+    color:red;
+    font-weight:bold;
+}
