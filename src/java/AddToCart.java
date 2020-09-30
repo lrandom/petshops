@@ -64,7 +64,13 @@ public class AddToCart extends HttpServlet {
         int id =new Integer(request.getParameter("id")).intValue();
         CartItem cartItem = new CartItem();
         cartItem.setId(id);
-        cartItem.setQuantity(1);
+        
+        int quantity = 1;
+        if(request.getParameter("quantity")!=null){
+            quantity = new Integer(request.getParameter("quantity")).intValue();
+        }
+        
+        cartItem.setQuantity(quantity);
         HttpSession session = request.getSession();
         Cart cart = new Cart(session);
         cart.addToCart(cartItem);

@@ -37,7 +37,12 @@ public class Cart {
             CartItem existItem = this.items.get(i);
             //nếu tồn tại sp trong giỏ hàng, tăng sl
             if(item.getId()==existItem.getId()){
-                existItem.setQuantity(existItem.getQuantity()+item.getQuantity());
+                int quantity = existItem.getQuantity()+item.getQuantity();
+                if(quantity<=0){
+                  this.items.remove(i);
+                  return;
+                }
+                existItem.setQuantity(quantity);
                 this.items.set(i, existItem);
                 isExist = true;
                 break;

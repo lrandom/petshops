@@ -41,8 +41,8 @@
                             <fmt:formatNumber value="${cartItems.get(index).getQuantity()*product.getPrice()}" type="currency"/>
                         </td>
                         <td>
-                            <a class="btn btn-primary">+</a>
-                            <a class="btn btn-primary">-</a>
+                            <a class="btn btn-primary" href="add-to-cart?id=${product.getId()}&quantity=1">+</a>
+                            <a class="btn btn-primary" href="add-to-cart?id=${product.getId()}&quantity=-1">-</a>
                         </td>
                          <c:set var="index" value="${index=index+1}"/>
                  
