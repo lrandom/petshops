@@ -36,8 +36,29 @@ public class ProductDAL extends Connection{
              products.add(product);
           }
         } catch (Exception e) {
-           
+           return null;
         }
         return products;
+    }
+    
+    public Product getProductById(int id){
+       Product product = new Product();
+       String sql = "SELECT * FROM products WHERE id = ?";
+        try {
+          PreparedStatement preparedStatement = this.conn.prepareStatement(sql);
+          preparedStatement.setInt(1,id);
+          ResultSet resultSet = preparedStatement.executeQuery();
+          while(resultSet.next()){
+             product.setId(resultSet.getInt("id"));
+             product.setName(resultSet.getString("name"));
+             product.setPreview(resultSet.getString("preview"));
+             product.setPrice(resultSet.getDouble("price"));
+             product.setContent(resultSet.getString("content"));
+           
+          }
+        } catch (Exception e) {
+            return null;
+        }
+        return product;
     }
 }
