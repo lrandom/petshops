@@ -8,10 +8,15 @@
 <%@page import="Model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="u" uri="/WEB-INF/tlds/utils.tld" %>
+<fmt:setLocale value="vi-VN"/>
+<fmt:setBundle basename="bundle.Main"/>
 <!DOCTYPE html>
 <html>
     <jsp:include page='./commons/header.jsp' />
     <body>
+        
         <jsp:include page="./commons/nav.jsp"/>
         <br>
         <br>
@@ -25,17 +30,27 @@
                         <img class="card-img-top" src="${product.getPreview()}" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">${product.getName()}</h5>
-                            <div class="price">${product.getPrice()}</div>
+                            <div class="price">
+                              
+                                <fmt:formatNumber type="currency" value="${product.getPrice()}"/>
+                            </div>
                             <p class="card-text">${product.getContent()}</p>
-                            <a href="add-to-cart?id=${product.getId()}" class="btn btn-primary">Add to cart</a>
+                            
+                            <a href="add-to-cart?id=${product.getId()}" class="btn btn-primary">
+                                <fmt:message key="add_to_cart"/>
+                          
+                            </a>
                         </div>
                     </div>
                 </div>
+                                <!--<u:ProductItem item="${product}"/>-->
+                                <!--<u:BlockSwearWord content="you are bitch, fuck you"/>-->
                 </c:forEach>     
             </div>
 
         </div>
                 
-        <jsp:include page="./commons/footer.jsp"/>         
+        <jsp:include page="./commons/footer.jsp"/>     
+       
     </body>
 </html>

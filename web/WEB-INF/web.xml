@@ -10,11 +10,15 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
-        <url-pattern>/home</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>AddToCart</servlet-name>
         <servlet-class>AddToCart</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <servlet-class>CheckoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddToCart</servlet-name>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>MyCartServlet</servlet-name>
         <url-pattern>/my-cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

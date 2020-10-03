@@ -52,12 +52,22 @@
                     
                     <tfoot>
                         <tr>
-                            <td colspan="5">
+                            <td colspan="3">
                                 Tổng giá
                                 <strong>
                             <fmt:formatNumber value="${totalPrice}" type="currency"/>
                                 </strong>
+                                
+                           
                                 </td>
+                                <td colspan="2" >
+                                             
+                                    <a href="checkout" class="btn btn-primary" style="float:right">
+                        <fmt:message key="checkout"/>
+                    </a>
+                      
+                                </td>
+                       
                         </tr>
                     <tfoot>
                 </table>
