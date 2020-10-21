@@ -44,17 +44,17 @@
              <div>
                   <div class="form-group">
                    <label>Name</label>
-                   <input type="text" class="form-control" name="name" placeholder="Enter Receiver Name">
+                   <input type="text" class="form-control" name="name" value="${user.getFullname()}" placeholder="Enter Receiver Name">
                   </div>
                  
                   <div class="form-group">
                    <label>Address</label>
-                   <input type="text" class="form-control" name="address" placeholder="Enter Address">
+                   <input type="text" class="form-control" name="address" value="${user.getAddress()}" placeholder="Enter Address">
                   </div>
                  
                   <div class="form-group">
                    <label>Phone</label>
-                   <input type="number" class="form-control" name="phone" placeholder="Enter Phone">
+                   <input type="number" class="form-control" name="phone" value="${user.getPhone()}" placeholder="Enter Phone">
                   </div>
              </div>
              
@@ -89,7 +89,7 @@
              <div>Tổng tiền: 
                  <fmt:formatNumber type="currency" value="${((totalPrice*10)/100) + totalPrice + 65 }"/>
                  </div>
-             
+             <input type="hidden" name="total_price" value="${((totalPrice*10)/100) + totalPrice + 65 }"/>
              <br>
              <button class="btn btn-primary">Make Order</button>
              </form>

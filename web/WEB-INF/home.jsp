@@ -36,7 +36,7 @@
                             </div>
                             <p class="card-text">${product.getContent()}</p>
                             
-                            <a href="add-to-cart?id=${product.getId()}" class="btn btn-primary">
+                            <a href="${pageContext.request.contextPath}/add-to-cart?id=${product.getId()}" class="btn btn-primary">
                                 <fmt:message key="add_to_cart"/>
                           
                             </a>

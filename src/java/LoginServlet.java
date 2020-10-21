@@ -4,14 +4,11 @@
  * and open the template in the editor.
  */
 
-import DAL.OrderDAL;
-import Model.Cart;
-import Model.Product;
+import DAL.UserDAL;
 import Model.User;
 import config.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Lrandom
  */
-public class CheckoutServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +38,10 @@ public class CheckoutServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckoutServlet</title>");            
+            out.println("<title>Servlet LoginServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CheckoutServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,27 +59,9 @@ public class CheckoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        HttpSession session = request.getSession();
-        
-        User user = (User)session.getAttribute("user");
-        if(user==null){
-            //ko dang nhap 
-            response.sendRedirect(Constants.BASE_NAME+ "login");
-            return;
-        }
-        if(session.getAttribute(Cart.CART_NAME)==null){
-              request.getRequestDispatcher("/").forward(request, response);
-        }
-        Cart cart = new Cart(request.getSession());
-        ArrayList<Product> products = cart.getProducts();
-            request.setAttribute("products", products);
-            request.setAttribute("totalPrice", cart.getTotalPrice());
-            request.setAttribute("cartItems", cart.getItems());
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("WEB-INF/checkout.jsp").forward(request, response);
+       // processRequest(request, response);
+       request.getRequestDispatcher("WEB-INF/auth/login.jsp").forward(request, response);
     }
-    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -96,36 +75,26 @@ public class CheckoutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("user");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        
+        response.getWriter().print(username);
+        response.getWriter().print(password);
+        
+        UserDAL userDAL = new UserDAL();
+        User user= userDAL
+                .getByUserNameAndPassword(username, password);
+        //response.getWriter().print(user.getUsername());
         if(user==null){
-            response.sendRedirect(Constants.BASE_NAME+"login");
-            return;
-        }
-        
-        String fullname = (String)request.getAttribute("fullname");
-        String address = (String)request.getAttribute("address");
-        String phone = (String)request.getAttribute("phone");
-        int paymentMethod = (int)request.getAttribute("payment_method");
-        double total = (double)request.getAttribute("total_price");
-        
-        OrderDAL.Payload payload = new OrderDAL.Payload();
-        payload.name = fullname;
-        payload.address = address;
-        payload.phone = phone;
-        payload.total = total;
-        payload.user_id = user.getId();
-        
-        OrderDAL dal = new OrderDAL();
-        int insertId =  dal.insert(payload);
-        
-        if(insertId==0){
-            //lỗi ko đc
+            request.setAttribute("error", "Thong tin dang nhap khong ton tai");
+            response.sendRedirect(Constants.BASE_NAME+"/login");
         }else{
-            //insert vao order detail
+            //set session 
+           HttpSession session = request.getSession();
+           session.setAttribute("user", user);
+           response.sendRedirect(Constants.BASE_NAME);
         }
     }
-
 
     /**
      * Returns a short description of the servlet.
